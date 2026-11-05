@@ -1,9 +1,28 @@
+import { faCartPlus, faHeartCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
+import Card from 'react-bootstrap/Card';
 
 function Wishlist() {
   return (
-    <div>
-      Wishlist
+    <div className='container my-5'>
+      <h1 className='pt-5 text-primary fw-bold'>User's Wishlist</h1>
+       <div className="row pt-4">
+                {/* Duplicate coloum according to products */}
+                <div className="col-3">
+                    {/* Cards */}
+                    <Card className='shadow p-2'>
+                        <Card.Img style={{height:"250px"}} variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSbZdjp77ayiENC5mjC-zZtNd7dQab5YjEZ_NmnJO4RA&s=10" />
+                        <Card.Body className='text-center'>
+                            <Card.Title>Perfume</Card.Title>
+                            <div className='d-flex justify-content-evenly'>
+                              <button className='btn text-danger fs-4'><FontAwesomeIcon icon={faHeartCircleXmark} /></button>
+                              <button className='btn text-success fs-4'><FontAwesomeIcon icon={faCartPlus} /></button>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
+            </div>
     </div>
   )
 }
