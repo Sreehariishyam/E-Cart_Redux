@@ -94,7 +94,7 @@ function Footer() {
         {/* Copyright */}
         <div className="text-center fw-bold fs-5">
 
-          Copyright © August 2025 Batch, Daily Cart.
+          Copyright © July 2026 Batch, Daily Cart.
           Built with React Redux.
 
         </div>
