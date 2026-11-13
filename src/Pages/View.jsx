@@ -1,34 +1,77 @@
 
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Header from'../Components/Header'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
+import { addToWishlist } from '../redux/slices/wishlistSlice'
 
 
 function View() {
+
+const {id} = useParams()
+console.log(id);
+const {allProducts} = useSelector(state=>state.productReducer)
+console.log(allProducts);
+
+const [product,setProduct] = useState({})
+const userWishlist = useSelector(state=>state.wishlistReducer)
+const dispatch = useDispatch()
+console.log(userWishlist);
+
+useEffect(()=>{
+  setProduct(allProducts?.find(item=>item.id==id))
+},[])
+// console.log(product);
+
+const handleWishlist = () => {
+  // check the product alraedy in the wishlist
+  const existingItem = userWishlist?.find(item=>item?.id==product?.id)
+  if(existingItem){
+    Swal.fire({
+      title:"Sorry",
+      text:"product already in your Wishlist",
+      icon:"error",
+      confirmButtonText:"ok"
+    })
+  }else{
+    dispatch(addToWishlist(product))
+  }
+}
+
   return (
-    <div className='container my-5'>
-      <div style={{height:"80vh"}} className='row align-items-center'>
-        <div className="col-lg-6 text-center">
-          <img className='img-fluid' src="https://img.magnific.com/free-vector/green-glass-jar-plastic-tube_88138-3.jpg?semt=ais_hybrid&w=740&q=80" alt="product" />  
-          <div className='d-flex justify-content-evenly mt-5'>
-            <button className='btn btn-info'>ADD TO WISHLIST</button>      
-            <button className='btn btn-success'>ADD TO CART</button>
+    <>
+      <Header/>
+      <div className='container my-5 pt-4'>
+        <div style={{height:"120vh"}} className='row align-items-center'>
+          <div className="col-lg-6 text-center">
+            <img className='img-fluid' src={product?.thumbnail} alt="product" />  
+            <div className='d-flex justify-content-evenly mt-5'>
+              <button onClick={handleWishlist} className='btn btn-info'>ADD TO WISHLIST</button>      
+              <button className='btn btn-success'>ADD TO CART</button>
+            </div>
           </div>
-        </div>
-        <div className="col-lg-6">
-          <h3 className='fw-bold'>Title</h3>
-          <h2 className='fw-bold'>$ 30</h2>
-          <h4 className='fw-bold'>Brand :</h4>
-          <h4 className='fw-bold'>Category :</h4>
-          <h4 className='fw-bold'>Description :</h4>
-          <h5 className='fw-bold'>Client Reviews</h5>
-          <div className='border rounded p-2 shadow my-5'>
-            <p><span className='fw-bolder'>Name :</span>Meassge</p>
-            <p>Rating : 5 <FontAwesomeIcon icon={faStar} className='text-warning'/></p>
+          <div className="col-lg-6">
+            <h3 className='fw-bold'>{product?.title}</h3>
+            <h2 className='fw-bold'>$ {product?.price}</h2>
+            <h4 className='fw-bold'>Brand :{product?.brand}</h4>
+            <h4 className='fw-bold'>Category :{product?.category}</h4>
+            <h4 className='fw-bold'>Description :{product?.description}</h4>
+            <h5 className='fw-bold'>Client Reviews</h5>
+            {
+              product?.reviews?.map(item=>(
+                <div className='border rounded p-2 shadow my-4'>
+              <p><span className='fw-bolder'>Name :{item?.reviewerName}</span>{item?.comment}</p>
+              <p>Rating : {item?.rating} <FontAwesomeIcon icon={faStar} className='text-warning'/></p>
+            </div>
+              ))
+            }
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

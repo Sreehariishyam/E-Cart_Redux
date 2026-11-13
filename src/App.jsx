@@ -6,7 +6,7 @@ import View from './pages/View'
 import Wishlist from './pages/Wishlist'
 import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
-import Header from './Components/Header'
+// import Header from './Components/Header'
 import Footer from './Components/Footer'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-    <Header/>
+    {/* <Header/> */}
      <Routes>
       <Route path='/' element={<Products />}/>
       <Route path='/products/:id' element={<View />}/>
