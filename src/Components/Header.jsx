@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Header({insideProduct}) {
   const userWishlist = useSelector(state=>state.wishlistReducer)
+
+  const userCart = useSelector(state=>state.cartReducer)
+
   const dispatch = useDispatch()
   return (
     <Navbar expand="lg" className="bg-primary fixed-top">
@@ -25,7 +28,7 @@ function Header({insideProduct}) {
               <input onChange={e=>dispatch(searchProduct(e.target.value))} type="text" className='form-control' placeholder='Search Your Products' />
             </Nav.Item>}
             <Link to={"/wishlist"} className='text-light text-decoration-none fw-bold ms-5'><FontAwesomeIcon icon={faHeart} className='btn btn-danger me-2' />Wishlist <Badge pill bg="secondary">{userWishlist?.length}</Badge></Link>
-            <Link to={"/cart"} className='text-light text-decoration-none fw-bold ms-5'><FontAwesomeIcon icon={faCartPlus} className='btn btn-success me-2'/>Cart <Badge pill bg="secondary">10</Badge></Link>
+            <Link to={"/cart"} className='text-light text-decoration-none fw-bold ms-5'><FontAwesomeIcon icon={faCartPlus} className='btn btn-success me-2'/>Cart <Badge pill bg="secondary">{userCart?.length}</Badge></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
